@@ -1,0 +1,2 @@
+pgadmin4-apache2	pgadmin4/email	string	<%= $elephant_shed::pgadmin_email %>
+pgadmin4-apache2	pgadmin4/password	password	<%= $elephant_shed::pgadmin_password %>
