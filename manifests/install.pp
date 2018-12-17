@@ -14,7 +14,7 @@ class elephant_shed::install {
     repos    => 'main',
     key      => {
       source => 'https://packages.credativ.com/public/postgresql/aptly.key',
-      id     => 'DF8FEB3BFD2B5A37B0D1FC419344AE88610AAE1F',
+      id     => 'F797920785697B85B92E8034C86768840A59F867',
     },
   }
 
@@ -40,10 +40,4 @@ class elephant_shed::install {
   class { 'postgresql::server':
   }
 
-  user { 'root':
-    groups  => [
-      'elephant-shed',
-    ],
-    require => Package['elephant-shed'],
-  }
 }
