@@ -28,7 +28,7 @@ class elephant_shed::install {
     ensure  => installed,
     require => [
       Apt::Source['credativ'],
-      Class[Apt::Update],
+      Class['Apt::Update'],
       File[$preseed_location],
     ],
   }
