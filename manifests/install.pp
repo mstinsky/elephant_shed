@@ -28,13 +28,14 @@ class elephant_shed::install {
     ensure  => installed,
     require => [
       Apt::Source['credativ'],
+      Class[Apt::Update],
       File[$preseed_location],
     ],
   }
 
   class { 'postgresql::globals':
     manage_package_repo => true,
-    version             => '10.6',
+    version             => '10',
   }
 
   class { 'postgresql::server':
