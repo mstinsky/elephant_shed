@@ -44,6 +44,6 @@ class elephant_shed::install {
     groups  => [
       'elephant-shed',
     ],
-    require => Package['credativ'],
+    require => Package['elephant-shed'],
   }
 }
