@@ -14,6 +14,7 @@
 class elephant_shed(
   String[1] $pgadmin_email,
   String[1] $pgadmin_password,
+  String[1] $postgresql_version = '10',
   ) {
 
   contain elephant_shed::install

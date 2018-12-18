@@ -5,8 +5,6 @@
 # @api private
 class elephant_shed::install {
 
-  $preseed_location = '/var/cache/debconf/elephant_shed.preseed'
-
   apt::source { 'credativ':
     comment  => 'This is the credativ repo, packages.credativ.com',
     location => 'https://packages.credativ.com/public/postgresql/',
@@ -18,10 +16,20 @@ class elephant_shed::install {
     },
   }
 
-  file { $preseed_location:
-    ensure  => file,
-    mode    => '0644',
-    content => epp("${module_name}/elephant_shed.preseed.epp"),
+  debconf { 'pgadmin4-apache2-email':
+    package => 'pgadmin4-apache2',
+    item    => 'pgadmin4/email',
+    type    => 'string',
+    value   => $::elephant_shed::pgadmin_email,
+    seen    => true,
+  }
+
+  debconf { 'pgadmin4-apache2-password':
+    package => 'pgadmin4-apache2',
+    item    => 'gadmin4/password',
+    type    => 'password',
+    value   => $::elephant_shed::pgadmin_password,
+    seen    => true,
   }
 
   package { 'elephant-shed':
@@ -29,13 +37,14 @@ class elephant_shed::install {
     require => [
       Apt::Source['credativ'],
       Class['Apt::Update'],
-      File[$preseed_location],
+      Debconf['pgadmin4-apache2-email'],
+      Debconf['pgadmin4-apache2-password'],
     ],
   }
 
   class { 'postgresql::globals':
     manage_package_repo => true,
-    version             => '10',
+    version             => $::elephant_shed::postgresql_version,
   }
 
   class { 'postgresql::server':
